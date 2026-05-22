@@ -6,12 +6,10 @@ const User = require('./models/User');
 const app = express();
 app.use(express.json());
 
-// Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.log('DB Error:', err));
 
-// Paystack webhook - auto credit wallet after payment
 app.post('/webhook/paystack', async (req, res) => {
   const event = req.body;
 
@@ -22,9 +20,10 @@ app.post('/webhook/paystack', async (req, res) => {
     try {
       await User.findOneAndUpdate(
         { telegramId },
-        { $inc: { walletBalance: amount } }
+        { $inc: { walletBalance: amount } },
+        { upsert: true }
       );
-      console.log(✅ Wallet credited: ₦${amount} for user ${telegramId});
+      console.log('Wallet credited: N' + amount + ' for user ' + telegramId);
     } catch (err) {
       console.log('Webhook error:', err);
     }
@@ -33,12 +32,11 @@ app.post('/webhook/paystack', async (req, res) => {
   res.sendStatus(200);
 });
 
-// Health check
 app.get('/', (req, res) => {
-  res.send('SME Bot Server is running! 🚀');
+  res.send('SME Bot Server is running!');
 });
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(Server running on port ${PORT});
+  console.log('Server running on port ' + PORT);
 });
