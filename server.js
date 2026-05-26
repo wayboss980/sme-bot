@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const User = require('./models/User');
+const bot = require('./index');
 
 const app = express();
 app.use(express.json());
@@ -24,6 +25,7 @@ app.post('/webhook/paystack', async (req, res) => {
         { upsert: true }
       );
       console.log('Wallet credited: N' + amount + ' for user ' + telegramId);
+      await bot.telegram.sendMessage(telegramId, 'Payment successful! Your wallet has been credited with N' + amount);
     } catch (err) {
       console.log('Webhook error:', err);
     }
