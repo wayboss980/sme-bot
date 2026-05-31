@@ -43,7 +43,7 @@ module.exports = (bot) => {
       );
 
       const paymentUrl = response.data.data.authorization_url;
-      await ctx.reply(Click the link below to fund ₦${amount}:\n\n${paymentUrl});
+      await ctx.reply(`Click the link below to fund ₦${amount}:\n\n${paymentUrl}`);
 
     } catch (err) {
       console.log(err);
