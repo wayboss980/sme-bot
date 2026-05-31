@@ -21,7 +21,7 @@ module.exports = (bot) => {
     if (text === '👤 My Account') return;
 
     const amount = parseInt(text);
-    if (isNaN(amount)  amount < 500) return;
+    if (isNaN(amount) || amount < 500) return;
 
     waitingForAmount.delete(ctx.from.id);
 
@@ -31,7 +31,7 @@ module.exports = (bot) => {
       const response = await axios.post(
         'https://api.paystack.co/transaction/initialize',
         {
-          email: user?.email  ${ctx.from.id}@socialpool.com,
+         email: user?.email || ${ctx.from.id}@socialpool.com,
           amount: amount * 100,
           metadata: { telegramId: String(ctx.from.id) }
         },
