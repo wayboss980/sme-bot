@@ -2,7 +2,7 @@ const Order = require('../models/Order');
 
 module.exports = (bot) => {
 
-  bot.hears('My Orders', async (ctx) => {
+  bot.hears('💼 My Orders', async (ctx) => {
     try {
       const orders = await Order.find({
         telegramId: String(ctx.from.id)
