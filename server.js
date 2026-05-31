@@ -45,7 +45,7 @@ app.post('/webhook/paystack', express.raw({ type: 'application/json' }), async (
 
       await bot.telegram.sendMessage(
         telegramId,
-        ✅ Payment Successful!\n\nYour wallet has been credited with ₦${amount}.\n\nEnjoy our services! 🎉
+        `✅ Payment Successful!\n\nYour wallet has been credited with ₦${amount}.\n\nEnjoy our services! 🎉`
       );
     } catch (err) {
       console.log('Webhook error:', err);
