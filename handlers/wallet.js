@@ -12,7 +12,7 @@ module.exports = (bot) => {
 
   bot.on('text', async (ctx) => {
     if (!waitingForAmount.has(ctx.from.id)) return;
-    
+
     const text = ctx.message.text;
     if (text === '📈 Boost Social Media') return;
     if (text === '📱 Buy Virtual Number') return;
