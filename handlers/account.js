@@ -2,7 +2,7 @@ const User = require('../models/User');
 
 module.exports = (bot) => {
 
-  bot.hears('My Account', async (ctx) => {
+  bot.hears('👤 My Account', async (ctx) => {
     try {
       let user = await User.findOne({ telegramId: String(ctx.from.id) });
 
