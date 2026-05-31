@@ -1,6 +1,6 @@
 module.exports = (bot) => {
 
-  bot.hears('Buy Virtual Number', async (ctx) => {
+ bot.hears('📱 Buy Virtual Number', async (ctx) => {
     await ctx.reply(
       'Choose a country for your virtual number:',
       {
