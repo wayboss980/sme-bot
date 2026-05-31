@@ -12,8 +12,16 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.log('DB Error:', err));
 
-// Launch bot
-bot.launch();
+// Launch bot with error handling
+bot.launch().catch(err => {
+  if (err.message && err.message.includes('409')) {
+    console.log('Another bot instance detected, retrying in 5 seconds...');
+    setTimeout(() => bot.launch(), 5000);
+  } else {
+    console.error('Bot launch error:', err);
+  }
+});
+
 console.log('Bot is running...');
 
 process.once('SIGINT', () => bot.stop('SIGINT'));
@@ -63,5 +71,5 @@ app.get('/', (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+  console.log(`Server running on port ${PORT});
+}`);
