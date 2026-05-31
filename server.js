@@ -7,7 +7,21 @@ const bot = require('./index');
 
 const app = express();
 
+// Connect to MongoDB
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.log('DB Error:', err));
+
+// Launch bot
+bot.launch();
+console.log('Bot is running...');
+
+process.once('SIGINT', () => bot.stop('SIGINT'));
+process.once('SIGTERM', () => bot.stop('SIGTERM'));
+
+// Paystack webhook
 app.post('/webhook/paystack', express.raw({ type: 'application/json' }), async (req, res) => {
+
   const hash = crypto
     .createHmac('sha512', process.env.PAYSTACK_SECRET_KEY)
     .update(req.body)
