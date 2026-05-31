@@ -26,11 +26,10 @@ require('./handlers/virtualNumbers')(bot);
 require('./handlers/orders')(bot);
 require('./handlers/account')(bot);
 
-if (require.main === module) {
-  bot.launch();
-}
+bot.launch();
 console.log('Bot is running...');
 
 process.once('SIGINT', () => bot.stop('SIGINT'));
 process.once('SIGTERM', () => bot.stop('SIGTERM'));
+
 module.exports = bot;
